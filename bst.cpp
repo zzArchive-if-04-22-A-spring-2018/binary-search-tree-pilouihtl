@@ -84,16 +84,25 @@ Bst right_subtree(Bst root){
 }
 int traverse_pre_order(Bst bst, int *elements, int start){
   if(bst == 0){
-    return start;
+    return 0;
   }
-  int count = 0;
+  int count = 1;
   elements[start] = bst->data;
   start++;
-  count += traverse_pre_order(bst->right, elements, start);
   count += traverse_pre_order(bst->left, elements, start);
+  count += traverse_pre_order(bst->right, elements, start - 1 + count);
+  return count;
 }
 int traverse_in_order(Bst bst, int *elements, int start){
-  return 0;
+  if(bst == 0){
+    return 0;
+  }
+  int count = 1;
+  elements[start] = bst->data;
+  start++;
+  count += traverse_in_order(bst->right, elements, start);
+  count += traverse_in_order(bst->left, elements, start - 1 + count);
+  return count;
 }
 int traverse_post_order(Bst bst, int *elements, int start){
   return 0;
